@@ -1,16 +1,29 @@
-# Lab 6: "High Power" Control
-For starters, you will not be dealing with anything that is truly "high power". Instead, what I am considering "high power" is anything with the potential to damage or fry your microcontrollers if you were to drive them directly. The idea behind this part of the lab is to learn how not only to drive things that may require a high voltage or high current, but how to then protect your microcontroller from them.
+High Power Readme
 
-## Switching
-Most of you have used one of the types of switching circuits to control the RGB LEDs. For this part of the lab, you need to focus on the different types of switching circuits along with the differences in inductive and resistive loads.
 
-### Relays
-A relay is a electro-mechanical system which can open and close a switch based on an input. 
-![Relay](https://www.phidgets.com/docs/images/1/1d/3051_1_Relay_Diagram.jpg)
-These are extremely useful in situations where large amounts of current need to flow, such as in automotive applications, but they do have their limits. For starters, since the actuation process requires a constant current, sometimes this can be too much for your processor to handle. Second, a lot of these relays require higher than 3.3V, which limits how you can actually turn these things on and off. Using the MSP430G2553, control the state of a relay to drive a power resistor with +12V. Your README for this part should include a screenshot of the output of your MSP and the voltage across the resistor. Try to figure out the switching speed limitations of the relay experimentally.
+# Power Resistor
+The power resistor used in this section of the lab is the same as the power resistor in the Open Loop Systems portion of the lab, which is a 80 Ohm power resistor. A 2 Watt 100 Ohm resistor would have worked just as well since the absolute maximum power disappated across the resistor would be 1.44 Watts; 1.44 Watts would be in the case of a short. The 5 Watt resistor was chosen instead due to availability.
+In the MOSFET circuit the voltage across the power resistor is 11.5 V, so 144 mA are going through the resistor, a power disappation of 1.65 Watts.
 
-### MOSFET Switching
-The MOSFET switch is a very simple circuit which can be used in a multitude of applications. One of the most important features of the MOSFET Switch is the near zero current it takes to switch the MOSFET from an on to an off state. There are two main architectures, low-side and high-side switch, each requiring a different type of MOSFET. Using the MSP430G2553, drive a power resistor with +12V in the same fashion as the relay. Obtain an MSP430G2553 voltage output along with the voltage through the power resistor. Try to figure out the switching speed limitations of the MOSFET experimentally.
+# Square Wave
+The square wave produced by the G2553 is essentially the same as the timer A blink done in lab 3. By varying the toggle speed of the input to the MOSFET the switching speed of the MOSFET and the relay can be found. To vary the toggle speed of the input the TACCR0 value can be easily changed in the code and re-debugging.
+This process is essentially the same as debouncing the switch. In the switches' case it was a mechanical failure of the contact hitting, whereas the phsyical properties of the silicon in the MOSFET, the resistance between the drain and source and the parasitic capacitance of the MOSFET itself, limit the speed at which the MOSFET can switch.
 
-## Deliverables
-Along with what was asked in each part, you will need to utilize the DMM to determine what the current draw from each switch is and if that falls into spec with the Microcontroller. You need to then come up with the best configuration you can think of using to control something that requires large current, but also protects your processor from damage. The reason I am asking you to do this with just the G2553 is: A) The code is just generating a square wave, and B) this part of the lab runs the highest chance of damaging your parts and we have spare G2553's just in case.
+# MOSFET Switching
+The schematic for a simple mosfet switch can be seen in the following diagram. In this a load resistor is connected to the 12 volt source and the gate of the MOSFET is connected to the square wave output of the microcontroller.
+
+![MosfetSwitchingSchematic](MosfetSwitchingSchematic.png)
+
+*Insert Screenshot when available* *Remember to bring a flashdrive*
+
+# Relay Switching
+The schematic for the relay switch circuit can be seen in this next figure. In this the MOSFET is not acting as a switch, but it is instead used as a buffer to isolate the microcontroller from the relay. The MOSFET protects the G2553's pin from the relay as it may draw too much current and burn out the pin. The diode in the schematic is there to protect the MOSFET from reverse voltage caused by the emf produced by inductor in the relay.
+
+![RelaySwitchSchematic](RelaySwitchSchematic.PNG)
+
+*Insert Screenshot when available*
+
+# References
+http://www.electronics-tutorials.ws/transistor/tran_7.html
+
+http://www.electronics-tutorials.ws/blog/relay-switch-circuit.html

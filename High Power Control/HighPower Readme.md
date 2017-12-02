@@ -1,5 +1,5 @@
 High Power Readme
-Authors: Ben Jukus and Ryan Drexel
+
 
 # Power Resistor
 The power resistor used in this section of the lab is the same as the power resistor in the Open Loop Systems portion of the lab, which is a 80 Ohm power resistor. A 2 Watt 100 Ohm resistor would have worked just as well since the absolute maximum power disappated across the resistor would be 1.44 Watts; 1.44 Watts would be in the case of a short. The 5 Watt resistor was chosen instead due to availability. 
